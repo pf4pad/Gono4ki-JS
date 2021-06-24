@@ -5,10 +5,17 @@ start = document.querySelector('.start'),
 gameArea = document.querySelector('.gameArea'),
 car = document.createElement('div');
 
-car.classList.add('car')
+const music = document.createElement('embed');
+
+music.src = 'audio.mp3';
+
+music.classList.add('visually-hidden');
+
+car.classList.add('car');
+
 start.addEventListener ('click', startGame)
-document.addEventListener('keyup', startRun)
-document.addEventListener('keydown', stopRun)
+document.addEventListener('keydown', startRun)
+document.addEventListener('keyup', stopRun)
 
 const keys = {
   ArrowUp: false,
@@ -25,12 +32,14 @@ const setting = {
 };
 
 function getQuantityElements(heightElement){
-  return document.documentElement.clientHeight / heightElement +1;
+  return document.documentElement.clientHeight / heightElement;
 }
  
-
+const getRandomEnemy = (max) => Math.floor((Math.random()* max) + 1);
 
 function startGame(){
+    document.body.append(music);
+
     start.classList.add('hide');
     gameArea.innerHTML = '';
     
@@ -46,7 +55,7 @@ function startGame(){
     for (let i = 0; i < getQuantityElements(100 * setting.traffic); i++){
       const enemy = document.createElement('div');
       enemy.classList.add('enemy');
-      enemy.y = 100 * setting.traffic * (i + 1);
+      enemy.y = -100 * setting.traffic * (i + 1);
       enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';;
       enemy.style.top = enemy.y + 'px';
       enemy.style.background = 'transparent url("./image/enemy.png") center / cover no-repeat';
@@ -60,12 +69,14 @@ function startGame(){
   car.style.bottom = '10px'
   setting.x = car.offsetLeft;
   setting.y = car.offsetTop;
+  
   requestAnimationFrame(playGame);
 }
 
 function playGame() {
   
   if (setting.start) {
+    
     moveRoad();
     moveEnemy();
     setting.score += setting.speed;
@@ -124,14 +135,14 @@ function moveEnemy(){
     let enemyRect = item.getBoundingClientRect();
 
 
-      if(carRect.top <= enemyRect.bottom && 
+      if (carRect.top <= enemyRect.bottom && 
          carRect.right >= enemyRect.left &&
          carRect.left <= enemyRect.right && 
          carRect.bottom >= enemyRect.top){
           setting.start = false;
-           console.warm('lng');
-           start.classList.remove('hide');
-           score.style.top = start.offsetHeight
+          music.src = '';
+          start.classList.remove('hide');
+          score.style.top = start.offsetHeight;
          }
       
     item.y += setting.speed / 2;
