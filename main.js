@@ -1,5 +1,5 @@
 'use strict';
-
+const MAX_ENEMY = 5;
 const score = document.querySelector('.score'),
 start = document.querySelector('.start'),
 gameArea = document.querySelector('.gameArea'),
@@ -58,7 +58,11 @@ function startGame(){
       enemy.y = -100 * setting.traffic * (i + 1);
       enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';;
       enemy.style.top = enemy.y + 'px';
-      enemy.style.background = 'transparent url("./image/enemy.png") center / cover no-repeat';
+      enemy.style.background = `
+        transparent
+        url('./image/enemy${getRandomEnemy(MAX_ENEMY)}.png')
+        center / cover
+        no-repeat`
       gameArea.appendChild(enemy);
     }
   setting.score = true;

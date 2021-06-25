@@ -1,0 +1,13 @@
+{
+  "name": "nfjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  }
+}
